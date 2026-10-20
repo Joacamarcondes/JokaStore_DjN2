@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Login — JokaStore{% endblock %}
+{% block content %}
+<div class="login-wrap"><form method="post" class="login-panel">{% csrf_token %}<div class="brand big-brand"><span class="brand-mark">GG</span> Store</div><div class="eyebrow">ACESSO DA EQUIPE</div><h1>Entrar no painel</h1><p>Faça login para administrar o catálogo.</p>
+{% if erro %}<div class="error-message">{{ erro }}</div>{% endif %}
+<label for="username">Usuário</label><input id="username" name="username" type="text" autocomplete="username" required>
+<label for="password">Senha</label><input id="password" name="password" type="password" autocomplete="current-password" required>
+<button class="primary-link button-link full-button" type="submit">Entrar</button><a class="secondary-link centered" href="{% url 'home' %}">Voltar à loja</a></form></div>
+{% endblock %}

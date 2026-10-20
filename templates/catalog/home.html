@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}JokaStore — Catálogo de jogos{% endblock %}
+{% block content %}
+{% if destaque %}
+<section class="featured-section">
+  <div class="section-tag">EM DESTAQUE</div>
+  <article class="featured-card">
+    <a class="featured-image" href="{% url 'detalhe_jogo' destaque.pk %}"><img src="{{ destaque.capa.url }}" alt="Capa de {{ destaque.nome }}"></a>
+    <div class="featured-info">
+      <div class="eyebrow">{{ destaque.genero.nome }} • {{ destaque.data_lancamento|date:"Y" }}</div>
+      <h1>{{ destaque.nome }}</h1>
+      <p>{{ destaque.descricao|truncatechars:190 }}</p>
+      <div class="platform-list">{% for plataforma in destaque.plataformas.all %}<span>{{ plataforma.nome }}</span>{% endfor %}</div>
+      <div class="price featured-price">R$ {{ destaque.preco|floatformat:2 }}</div>
+      <a class="primary-link" href="{% url 'detalhe_jogo' destaque.pk %}">Ver detalhes <span>↗</span></a>
+    </div>
+  </article>
+</section>
+{% endif %}
+<section class="catalog-section">
+  <div class="section-heading"><div><div class="eyebrow">EXPLORE A COLEÇÃO</div><h2>Todos os jogos</h2></div><span class="count">{{ jogos|length }} JOGOS</span></div>
+  <div class="game-grid">
+    {% for jogo in jogos %}
+    <article class="game-card">
+      <a class="cover-link" href="{% url 'detalhe_jogo' jogo.pk %}"><img src="{{ jogo.capa.url }}" alt="Capa de {{ jogo.nome }}"></a>
+      <div class="game-card-info"><a class="game-title" href="{% url 'detalhe_jogo' jogo.pk %}">{{ jogo.nome }}</a><div class="price">R$ {{ jogo.preco|floatformat:2 }}</div></div>
+    </article>
+    {% empty %}<p class="empty-state">Ainda não há jogos cadastrados. Cadastre alguns pelo painel administrativo.</p>{% endfor %}
+  </div>
+</section>
+{% endblock %}

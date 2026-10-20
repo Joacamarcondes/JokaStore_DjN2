@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Painel de controle — JokaStore{% endblock %}
+{% block content %}
+<div class="dashboard-header"><div><div class="eyebrow">ÁREA RESTRITA</div><h1>Painel de controle</h1><p>Gerencie os jogos cadastrados na loja.</p></div><a class="primary-link" href="{% url 'adicionar_jogo' %}">＋ Adicionar jogo</a></div>
+<div class="table-wrap"><table><thead><tr><th>Jogo</th><th>Gênero</th><th>Preço</th><th>Destaque</th><th>Ações</th></tr></thead><tbody>
+{% for jogo in jogos %}<tr><td><div class="table-game"><img src="{{ jogo.capa.url }}" alt=""><strong>{{ jogo.nome }}</strong></div></td><td>{{ jogo.genero.nome }}</td><td class="price">R$ {{ jogo.preco|floatformat:2 }}</td><td>{% if jogo.destaque %}<span class="status status-on">Sim</span>{% else %}<span class="status">Não</span>{% endif %}</td><td><div class="actions"><a href="{% url 'editar_jogo' jogo.pk %}">Editar</a><a class="danger-link" href="{% url 'apagar_jogo' jogo.pk %}">Apagar</a><a href="{% url 'detalhe_jogo' jogo.pk %}">Ver</a></div></td></tr>
+{% empty %}<tr><td colspan="5">Nenhum jogo cadastrado.</td></tr>{% endfor %}
+</tbody></table></div>
+{% endblock %}

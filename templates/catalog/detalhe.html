@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}{{ jogo.nome }} — JokaStore{% endblock %}
+{% block content %}
+<a class="back-link" href="{% url 'home' %}">← Voltar para a loja</a>
+<section class="detail-card">
+  <div class="detail-cover"><img src="{{ jogo.capa.url }}" alt="Capa de {{ jogo.nome }}"></div>
+  <div class="detail-info">
+    <div class="eyebrow">{{ jogo.genero.nome }} • Lançado em {{ jogo.data_lancamento|date:"d/m/Y" }}</div>
+    <h1>{{ jogo.nome }}</h1>
+    <p class="description">{{ jogo.descricao }}</p>
+    <h3>Plataformas</h3><div class="platform-list">{% for plataforma in jogo.plataformas.all %}<span>{{ plataforma.nome }}</span>{% empty %}<span>Não informado</span>{% endfor %}</div>
+    <div class="price detail-price">R$ {{ jogo.preco|floatformat:2 }}</div>
+  </div>
+</section>
+<section class="reviews-section">
+  <div class="section-heading"><div><div class="eyebrow">OPINIÃO DA COMUNIDADE</div><h2>Avaliações</h2></div><span class="count">{{ jogo.avaliacoes.count }} AVALIAÇÕES</span></div>
+  <div class="reviews-list">
+    {% for avaliacao in jogo.avaliacoes.all %}
+    <article class="review-card"><div class="review-top"><strong>{{ avaliacao.nome_visitante }}</strong><span class="stars" aria-label="{{ avaliacao.nota }} de 5 estrelas">{% for n in "12345" %}{% if forloop.counter <= avaliacao.nota %}★{% else %}☆{% endif %}{% endfor %}</span></div><p>{{ avaliacao.comentario }}</p><time>{{ avaliacao.criada_em|date:"d/m/Y" }}</time></article>
+    {% empty %}<p class="empty-state">Este jogo ainda não recebeu avaliações.</p>{% endfor %}
+  </div>
+</section>
+{% endblock %}

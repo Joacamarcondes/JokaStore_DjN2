@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block title %}Apagar jogo — JokaStore{% endblock %}
+{% block content %}
+<div class="form-panel narrow"><div class="eyebrow">CONFIRMAR AÇÃO</div><h1>Apagar jogo?</h1><p>Tem certeza de que deseja apagar <strong>{{ jogo.nome }}</strong>? Essa ação não pode ser desfeita.</p>
+<form method="post">{% csrf_token %}<div class="form-actions"><button class="danger-button" type="submit">Sim, apagar</button><a class="secondary-link" href="{% url 'dashboard' %}">Cancelar</a></div></form></div>
+{% endblock %}

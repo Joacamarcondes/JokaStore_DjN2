@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}JokaStore{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="{% url 'home' %}"><span class="brand-mark">JOKA</span> Store</a>
+  <nav>
+    <a href="{% url 'dashboard' %}">Gestão</a>
+    {% if user.is_authenticated %}
+      <form class="inline-form" method="post" action="{% url 'logout' %}">{% csrf_token %}<button class="nav-button" type="submit">Sair ({{ user.username }})</button></form>
+    {% else %}
+      <a class="nav-button" href="{% url 'login' %}">Dashboard / Login</a>
+    {% endif %}
+  </nav>
+</header>
+<main class="page">
+  {% if messages %}{% for message in messages %}<div class="message">{{ message }}</div>{% endfor %}{% endif %}
+  {% block content %}{% endblock %}
+</main>
+<footer class="footer">JokaStore <span>•</span> Catálogo de jogos digitais</footer>
+</body>
+</html>

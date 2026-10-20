@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}{{ titulo }} — JokaStore{% endblock %}
+{% block content %}
+<a class="back-link" href="{% url 'dashboard' %}">← Voltar ao painel</a>
+<div class="form-panel"><div class="eyebrow">GERENCIAMENTO DO CATÁLOGO</div><h1>{{ titulo }}</h1>
+<form method="post" enctype="multipart/form-data" class="game-form">{% csrf_token %}
+  {{ form.non_field_errors }}
+  {% for field in form %}
+  <div class="form-field"><label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}{% if field.help_text %}<small>{{ field.help_text }}</small>{% endif %}{{ field.errors }}</div>
+  {% endfor %}
+  <div class="form-actions"><button class="primary-link button-link" type="submit">Salvar jogo</button><a class="secondary-link" href="{% url 'dashboard' %}">Cancelar</a></div>
+</form></div>
+{% endblock %}
